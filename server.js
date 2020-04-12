@@ -1,14 +1,19 @@
 const express = require('express');
-const morgan = require ('morgan');
-const bodyParser = require ('body-parser');
+const morgan = require('morgan');
+const bodyParser = require('body-parser');
+const request = require('superagent');
+require('dotenv').config();
+
+
 var profile = require('./profile');
 
 const app = express()
 
 app.use(morgan('dev'))
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use('/public', express.static('public'))
+
 // defines the route that will use your custom router
 app.use('/profile', profile)
 
@@ -32,9 +37,54 @@ app.get('/contact', (req, res) => {
     res.render('contact');
 });
 
-app.post('/thanks', (req, res) => {
-    res.render('thanks', {contact: req.body})
+app.get('/projects', (req, res) => {
+    res.render('projects');
 });
+
+
+const mailchimpInstance = 'us19';
+const listUniqueId = 'ccf4ca277f';
+const mailchimpApiKey = process.env.MC_API_KEY
+
+app.post('/thanks', (req, res) => {
+
+    request
+        .post(`https://${mailchimpInstance}.api.mailchimp.com/3.0/lists/${listUniqueId}/members/`)
+        .set('Content-Type', 'application/json;charset=utf-8')
+        .set('Authorization', 'Basic ' + new Buffer('anystring:' + mailchimpApiKey).toString('base64'))
+        .send({
+            'email_address': req.body.email,
+            'status': 'subscribed',
+            'merge_fields': {
+                'FNAME': req.body.firstName,
+                'LNAME': req.body.lastName
+            }
+        })
+        .end(function (err, response) {
+            if (response.status < 300 || (response.status === 400)) {
+                res.render('thanks', { contact: req.body });
+                console.log('Success!', {contact: req.body})
+            } else {
+                res.send('Sign Up Failed :(');
+            }
+        });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 app.listen(8080, () => {
     console.log('listening at http://localhost:8080');

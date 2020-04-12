@@ -1,11 +1,28 @@
 <!DOCTYPE html>
 <htm>
-    <head>
-        <title>Thank You</title>
-    </head>
-        <body>
-            <div>
-                Thank you <%=contact.firstName %> <%= contact.lastName %>!
-            </div>
-        </body>
-</html>
+
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+			integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="/public/styles.css" />
+
+		<title>Thank You</title>
+	</head>
+
+	<body id="thanks">
+		<div class="d-flex justify-content-center">
+			<div class="card" style="margin-top: 2em;">
+				<div class="card-header">
+				</div>
+				<div class="card-body">
+					<p class="lead" id="thank-you">Thank you <%=contact.firstName %> <%= contact.lastName %>!
+						</br> Looking forward to connecting with you soon!
+						<br style="text-align: right"/> - Sean
+                            </p>
+
+				</div>
+			</div>
+		</div>
+	</body>
+
+	</html>

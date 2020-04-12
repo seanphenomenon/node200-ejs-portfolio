@@ -1,0 +1,30 @@
+
+body{
+    background-color: #F8EFBA;
+}
+
+/* #thank-you {
+   font-weight: bold;
+   font-size: 30px; 
+} */
+
+#contact {
+    background-color:#FEA47F;
+}
+#jumbotron{
+    background-color: #26de81;
+    color: white;
+    text-align: center;
+
+}
+#lead {
+    color: black;
+}
+
+#projects {
+    background-color: #3B3B98;
+}
+
+#thanks {
+    background-color: #1B9CFC;
+}
