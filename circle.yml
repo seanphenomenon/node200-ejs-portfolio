@@ -8,6 +8,7 @@ jobs:
 
     steps:
         - checkout
+
         - restore_cache:
             keys:
             - v1-dependencies-{{ checksum "package.json" }}
@@ -22,3 +23,14 @@ jobs:
             key: v1-dependencies-{{ checksum "package.json" }}
 
         - run: yarn test
+
+deploy:
+docker:
+    - image: circle/node:8.11
+steps:
+    - checkout
+    - run:
+        name: Deploy Master to Heroku
+        command: |
+         git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+
