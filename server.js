@@ -7,6 +7,7 @@ require('dotenv').config();
 
 var profile = require('./profile');
 
+const PORT = process.env.PORT || 8080;
 const app = express()
 
 app.use(morgan('dev'))
@@ -70,6 +71,6 @@ app.post('/thanks', (req, res) => {
         });
 });
 
-app.listen(8080, () => {
-    console.log('listening at http://localhost:8080');
+app.listen(PORT, () => {
+    console.log(`listening at http://localhost:${PORT}`);
 });
